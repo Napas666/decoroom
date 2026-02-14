@@ -9,6 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            --purple: #8B4789;
+            --pink: #D946A6;
+            --light-pink: #F5B7E0;
+            --orange: #FF6B35;
             --cream: #FFF8F0;
             --rose: #D4958C;
             --rose-dark: #B87B73;
@@ -64,7 +68,7 @@
             width: 150%;
             height: 150%;
             transform: translate(-50%, -50%);
-            background-image: url('intro-bg.png');
+            background-image: url('intro-bg.jpg');
             background-size: cover;
             background-position: center;
             opacity: 0.15;
@@ -1310,7 +1314,7 @@
         <div class="top-bar">
             <div class="top-bar-content">
                 <div class="top-bar-info">
-                    📞 +7 (495) 123-45-67 | 📧 info@decoroom.ru
+                    📞 +7 (495) 123-45-67 | 📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="177e79717857737274786578787a396562">[email&#160;protected]</a>
                 </div>
                 <div class="top-bar-links">
                     <a href="#delivery">Доставка</a>
@@ -1820,7 +1824,7 @@
                     <h3>Контакты</h3>
                     <ul class="footer-links">
                         <li>📞 +7 (495) 123-45-67</li>
-                        <li>📧 info@decoroom.ru</li>
+                        <li>📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="630a0d050c230706000c110c0c0e4d1116">[email&#160;protected]</a></li>
                         <li>📍 Москва, ул. Тверская, д. 1</li>
                         <li>🕐 Пн-Вс: 10:00 - 21:00</li>
                     </ul>
@@ -1832,7 +1836,7 @@
         </footer>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Intro Screen Animation
         const introScreen = document.getElementById('introScreen');
         const introContent = document.getElementById('introContent');
@@ -1967,15 +1971,4 @@
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 goToSlide(index);
-                startAutoSlide();
-            });
-        });
-
-        startAutoSlide();
-
-        const carouselContainer = document.querySelector('.carousel-container');
-        carouselContainer.addEventListener('mouseenter', () => clearInterval(autoSlideTimer));
-        carouselContainer.addEventListener('mouseleave', startAutoSlide);
-    </script>
-</body>
-</html>
+                startAut
