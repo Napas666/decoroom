@@ -9,14 +9,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --purple: #8B4789;
-            --pink: #D946A6;
-            --light-pink: #F5B7E0;
-            --orange: #FF6B35;
+            /* Зелёная палитра из скриншота */
+            --color-1: #2C4A52;  /* Тёмно-бирюзовый */
+            --color-2: #3D7068;  /* Бирюзово-зелёный */
+            --color-3: #4E9A6B;  /* Зелёный */
+            --color-4: #7FBF40;  /* Салатовый */
+            --color-5: #D4E157;  /* Лимонный */
             --cream: #FFF8F0;
             --white: #FFFFFF;
             --dark: #0a0a0a;
-            --shadow: rgba(139, 71, 137, 0.3);
+            --shadow: rgba(62, 154, 107, 0.3);
+        }
+
+        /* Dark theme */
+        [data-theme="dark"] {
+            --cream: #1a1a1a;
+            --white: #2a2a2a;
+            --dark: #f0f0f0;
+            --shadow: rgba(127, 191, 64, 0.3);
         }
 
         * {
@@ -28,14 +38,14 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--cream);
-            color: var(--purple);
+            color: var(--color-1);
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
             cursor: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Intro Screen - ИСПРАВЛЕНО */
+        /* Intro Screen */
         .intro-screen {
             position: fixed;
             top: 0;
@@ -56,8 +66,8 @@
             visibility: hidden;
         }
 
-        /* Black Hole - ИСПРАВЛЕНО для полного экрана */
-        .black-hole-container {
+        /* GIF Background - БЕЗ ВРАЩЕНИЯ */
+        .intro-bg-container {
             position: absolute;
             top: 0;
             left: 0;
@@ -66,24 +76,18 @@
             overflow: hidden;
         }
 
-        .black-hole-bg {
+        .intro-bg {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 200%;
-            min-height: 200%;
-            width: 200%;
-            height: 200%;
-            transform: translate(-50%, -50%);
-            background-image: url('intro-bg.jpg');
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('intro-bg.gif');
             background-size: cover;
             background-position: center;
-            animation: rotateHole 40s linear infinite;
-        }
-
-        @keyframes rotateHole {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            background-repeat: no-repeat;
+            transform: scaleX(-1); /* Горизонтальный переворот */
+            /* БЕЗ АНИМАЦИИ ВРАЩЕНИЯ */
         }
 
         .intro-overlay {
@@ -101,12 +105,12 @@
             cursor: pointer;
             position: relative;
             z-index: 2;
-            transition: all 2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: opacity 1.5s ease, transform 1.5s ease;
         }
 
-        .intro-content.zoom-out {
-            transform: scale(0.3) rotate(720deg);
+        .intro-content.fade-out {
             opacity: 0;
+            transform: scale(0.9);
         }
 
         .intro-logo-container {
@@ -126,14 +130,14 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 0 30px rgba(217, 70, 166, 0.8)) drop-shadow(0 0 60px rgba(139, 71, 137, 0.6));
+            filter: drop-shadow(0 0 30px rgba(127, 191, 64, 0.8)) drop-shadow(0 0 60px rgba(78, 154, 107, 0.6));
         }
 
         .intro-text {
             margin-top: 40px;
             font-family: 'Snell Roundhand', 'Brush Script MT', cursive;
             font-size: 3rem;
-            background: linear-gradient(135deg, var(--pink), var(--purple), var(--orange));
+            background: linear-gradient(135deg, var(--color-4), var(--color-3), var(--color-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -144,7 +148,7 @@
         .intro-subtitle {
             margin-top: 15px;
             font-size: 1.2rem;
-            color: var(--light-pink);
+            color: var(--color-5);
             opacity: 0;
             animation: fadeInText 1s ease 1s forwards;
         }
@@ -152,7 +156,7 @@
         .click-hint {
             margin-top: 50px;
             font-size: 0.9rem;
-            color: var(--pink);
+            color: var(--color-4);
             opacity: 0;
             animation: fadeInBounce 1.5s ease 1.5s forwards;
         }
@@ -166,11 +170,11 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Custom Cursor */
+        /* Cursor */
         .cursor {
             width: 20px;
             height: 20px;
-            border: 2px solid var(--pink);
+            border: 2px solid var(--color-4);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
@@ -183,7 +187,7 @@
         .cursor-follower {
             width: 40px;
             height: 40px;
-            border: 1px solid var(--purple);
+            border: 1px solid var(--color-3);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
@@ -196,7 +200,7 @@
         .cursor.hover {
             width: 50px;
             height: 50px;
-            background-color: rgba(217, 70, 166, 0.2);
+            background-color: rgba(127, 191, 64, 0.2);
         }
 
         .cursor-follower.hover {
@@ -208,7 +212,7 @@
             cursor: none !important;
         }
 
-        /* Animated Background */
+        /* Background */
         .animated-bg {
             position: fixed;
             top: 0;
@@ -222,7 +226,7 @@
 
         .particle {
             position: absolute;
-            background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+            background: radial-gradient(circle, var(--color-4) 0%, transparent 70%);
             border-radius: 50%;
             opacity: 0.15;
             animation: float linear infinite;
@@ -235,37 +239,10 @@
             100% { transform: translateY(-100px) translateX(100px) rotate(360deg); opacity: 0; }
         }
 
-        .particle:nth-child(1) { left: 10%; width: 80px; height: 80px; animation-duration: 25s; animation-delay: 0s; }
+        .particle:nth-child(1) { left: 10%; width: 80px; height: 80px; animation-duration: 25s; }
         .particle:nth-child(2) { left: 30%; width: 60px; height: 60px; animation-duration: 20s; animation-delay: 2s; }
         .particle:nth-child(3) { left: 50%; width: 100px; height: 100px; animation-duration: 30s; animation-delay: 4s; }
         .particle:nth-child(4) { left: 70%; width: 70px; height: 70px; animation-duration: 22s; animation-delay: 6s; }
-
-        /* Wave Background */
-        .wave-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 200px;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.1;
-        }
-
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%23D946A6"/></svg>') repeat-x;
-            animation: wave 25s linear infinite;
-        }
-
-        @keyframes wave {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
 
         .content-wrapper {
             position: relative;
@@ -274,10 +251,11 @@
 
         /* Top Bar */
         .top-bar {
-            background: linear-gradient(135deg, var(--purple), var(--pink));
+            background: linear-gradient(135deg, var(--color-3), var(--color-4));
             color: var(--white);
             padding: 10px 0;
             font-size: 0.85rem;
+            transition: background 0.3s ease;
         }
 
         .top-bar-content {
@@ -297,17 +275,18 @@
         }
 
         .top-bar-links a:hover {
-            color: var(--orange);
+            color: var(--color-5);
         }
 
         /* Header */
         header {
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: var(--white);
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 20px var(--shadow);
             position: sticky;
             top: 0;
             z-index: 999;
+            transition: background-color 0.3s ease;
         }
 
         .header-content {
@@ -329,22 +308,42 @@
             width: 60px;
             height: 60px;
             object-fit: contain;
-            filter: drop-shadow(0 2px 8px rgba(217, 70, 166, 0.5));
+            filter: drop-shadow(0 2px 8px rgba(127, 191, 64, 0.5));
             transition: transform 0.4s ease;
         }
 
         .logo-image:hover {
-            transform: rotate(360deg) scale(1.1);
+            transform: scale(1.1);
         }
 
         .logo-text {
             font-family: 'Snell Roundhand', 'Brush Script MT', cursive;
             font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--purple), var(--pink));
+            background: linear-gradient(135deg, var(--color-3), var(--color-4));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: linear-gradient(135deg, var(--color-3), var(--color-4));
+            border: none;
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
         nav ul {
@@ -355,7 +354,7 @@
         }
 
         nav a {
-            color: var(--purple);
+            color: var(--color-3);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -370,12 +369,12 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--pink), var(--orange));
+            background: linear-gradient(90deg, var(--color-4), var(--color-5));
             transition: width 0.3s;
         }
 
         nav a:hover {
-            color: var(--pink);
+            color: var(--color-4);
         }
 
         nav a:hover::before {
@@ -391,14 +390,14 @@
         .icon-btn {
             background: none;
             border: none;
-            color: var(--purple);
+            color: var(--color-3);
             font-size: 1.3rem;
             transition: all 0.3s;
             position: relative;
         }
 
         .icon-btn:hover {
-            color: var(--pink);
+            color: var(--color-4);
             transform: scale(1.1);
         }
 
@@ -406,7 +405,7 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: linear-gradient(135deg, var(--pink), var(--purple));
+            background: linear-gradient(135deg, var(--color-4), var(--color-3));
             color: var(--white);
             border-radius: 50%;
             width: 18px;
@@ -426,15 +425,13 @@
             display: flex;
             align-items: center;
             overflow: hidden;
+            transition: background 0.3s ease;
         }
 
         .hero-content {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             width: 100%;
             position: relative;
             z-index: 1;
@@ -445,11 +442,11 @@
             font-size: 4rem;
             line-height: 1.2;
             margin-bottom: 20px;
-            color: var(--purple);
+            color: var(--color-3);
         }
 
         .hero-text h1 span {
-            background: linear-gradient(135deg, var(--pink), var(--orange));
+            background: linear-gradient(135deg, var(--color-4), var(--color-5));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -457,12 +454,12 @@
 
         .hero-text p {
             font-size: 1.2rem;
-            color: #8B7355;
+            color: var(--color-2);
             margin-bottom: 35px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--pink), var(--purple));
+            background: linear-gradient(135deg, var(--color-4), var(--color-3));
             color: var(--white);
             padding: 16px 45px;
             border: none;
@@ -470,13 +467,13 @@
             font-weight: 600;
             letter-spacing: 1px;
             transition: all 0.4s;
-            box-shadow: 0 4px 15px rgba(217, 70, 166, 0.4);
+            box-shadow: 0 4px 15px var(--shadow);
             text-transform: uppercase;
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(217, 70, 166, 0.5);
+            box-shadow: 0 8px 25px var(--shadow);
         }
 
         /* Products */
@@ -489,7 +486,7 @@
         .section-header h2 {
             font-family: 'Snell Roundhand', 'Brush Script MT', cursive;
             font-size: 3.5rem;
-            background: linear-gradient(135deg, var(--purple), var(--pink));
+            background: linear-gradient(135deg, var(--color-3), var(--color-4));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -520,7 +517,7 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: linear-gradient(135deg, var(--pink), var(--purple));
+            background: linear-gradient(135deg, var(--color-4), var(--color-3));
             color: var(--white);
             padding: 5px 12px;
             border-radius: 20px;
@@ -554,48 +551,56 @@
         .product-info h3 {
             font-size: 1.2rem;
             margin-bottom: 10px;
-            color: var(--purple);
+            color: var(--color-3);
         }
 
         .current-price {
             font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--pink), var(--purple));
+            background: linear-gradient(135deg, var(--color-4), var(--color-3));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
+        .old-price {
+            font-size: 1.1rem;
+            text-decoration: line-through;
+            color: #999;
+            margin-left: 10px;
+        }
+
         .star {
-            color: var(--orange);
+            color: var(--color-5);
         }
 
         .add-to-cart {
             width: 100%;
-            background: linear-gradient(135deg, var(--purple), var(--pink));
+            background: linear-gradient(135deg, var(--color-3), var(--color-4));
             color: var(--white);
             border: none;
             padding: 12px;
             font-weight: 600;
             transition: all 0.3s;
             margin-top: 15px;
+            border-radius: 5px;
         }
 
         .add-to-cart:hover {
-            background: linear-gradient(135deg, var(--pink), var(--orange));
+            background: linear-gradient(135deg, var(--color-4), var(--color-5));
         }
 
         /* Footer */
         footer {
-            background: linear-gradient(135deg, var(--purple), #6B3468);
+            background: linear-gradient(135deg, var(--color-3), var(--color-2));
             color: var(--white);
             padding: 60px 40px 20px;
             text-align: center;
+            transition: background 0.3s ease;
         }
 
         @media (max-width: 968px) {
             .products-grid { grid-template-columns: repeat(2, 1fr); }
-            nav ul { gap: 15px; }
             .cursor, .cursor-follower { display: none; }
             * { cursor: auto !important; }
         }
@@ -605,11 +610,11 @@
         }
     </style>
 </head>
-<body>
+<body data-theme="light">
     <!-- Intro Screen -->
     <div class="intro-screen" id="introScreen">
-        <div class="black-hole-container">
-            <div class="black-hole-bg"></div>
+        <div class="intro-bg-container">
+            <div class="intro-bg"></div>
             <div class="intro-overlay"></div>
         </div>
         <div class="intro-content" id="introContent">
@@ -633,7 +638,6 @@
         <div class="particle"></div>
         <div class="particle"></div>
     </div>
-    <div class="wave-container"><div class="wave"></div></div>
 
     <!-- Content -->
     <div class="content-wrapper">
@@ -666,6 +670,10 @@
                     </ul>
                 </nav>
                 <div class="header-icons">
+                    <button class="theme-toggle" id="themeToggle">
+                        <span id="themeIcon">🌙</span>
+                        <span id="themeText">Тёмная</span>
+                    </button>
                     <button class="icon-btn">🔍</button>
                     <button class="icon-btn">❤️</button>
                     <button class="icon-btn">🛒<span class="cart-count">0</span></button>
@@ -684,7 +692,7 @@
             </div>
         </section>
 
-        <!-- Products -->
+        <!-- Products - Новинки -->
         <section class="products" id="new">
             <div class="section-header">
                 <h2>Новинки</h2>
@@ -698,7 +706,7 @@
                     <div class="product-info">
                         <h3>Диван "Классик"</h3>
                         <div><span class="star">★★★★★</span></div>
-                        <div class="current-price">89 990 ₽</div>
+                        <div><span class="current-price">89 990 ₽</span></div>
                         <button class="add-to-cart">В корзину</button>
                     </div>
                 </div>
@@ -711,7 +719,7 @@
                     <div class="product-info">
                         <h3>Кресло "Лофт"</h3>
                         <div><span class="star">★★★★☆</span></div>
-                        <div class="current-price">34 990 ₽</div>
+                        <div><span class="current-price">34 990 ₽</span><span class="old-price">45 990 ₽</span></div>
                         <button class="add-to-cart">В корзину</button>
                     </div>
                 </div>
@@ -724,7 +732,7 @@
                     <div class="product-info">
                         <h3>Торшер "Модерн"</h3>
                         <div><span class="star">★★★★★</span></div>
-                        <div class="current-price">12 990 ₽</div>
+                        <div><span class="current-price">12 990 ₽</span></div>
                         <button class="add-to-cart">В корзину</button>
                     </div>
                 </div>
@@ -737,7 +745,171 @@
                     <div class="product-info">
                         <h3>Картина "Абстракция"</h3>
                         <div><span class="star">★★★★☆</span></div>
-                        <div class="current-price">8 990 ₽</div>
+                        <div><span class="current-price">8 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge">Новинка</span>
+                        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?w=300&h=280&fit=crop" alt="Стул">
+                    </div>
+                    <div class="product-info">
+                        <h3>Стул "Элегант"</h3>
+                        <div><span class="star">★★★★★</span></div>
+                        <div><span class="current-price">14 990 ₽</span><span class="old-price">19 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge">Новинка</span>
+                        <img src="https://images.unsplash.com/photo-1538688423619-a81d3f23454b?w=300&h=280&fit=crop" alt="Стол">
+                    </div>
+                    <div class="product-info">
+                        <h3>Стол "Винтаж"</h3>
+                        <div><span class="star">★★★★★</span></div>
+                        <div><span class="current-price">54 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge">Новинка</span>
+                        <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=300&h=280&fit=crop" alt="Зеркало">
+                    </div>
+                    <div class="product-info">
+                        <h3>Зеркало "Шик"</h3>
+                        <div><span class="star">★★★★★</span></div>
+                        <div><span class="current-price">19 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge">Новинка</span>
+                        <img src="https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=300&h=280&fit=crop" alt="Ваза">
+                    </div>
+                    <div class="product-info">
+                        <h3>Ваза "Артистик"</h3>
+                        <div><span class="star">★★★★☆</span></div>
+                        <div><span class="current-price">4 990 ₽</span><span class="old-price">6 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products - Хиты продаж -->
+        <section class="products" id="bestsellers">
+            <div class="section-header">
+                <h2>Хиты продаж</h2>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge" style="background: linear-gradient(135deg, #D4E157, #7FBF40);">Хит</span>
+                        <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=300&h=280&fit=crop" alt="Комод">
+                    </div>
+                    <div class="product-info">
+                        <h3>Комод "Модерн"</h3>
+                        <div><span class="star">★★★★☆</span></div>
+                        <div><span class="current-price">39 990 ₽</span><span class="old-price">49 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge" style="background: linear-gradient(135deg, #D4E157, #7FBF40);">Хит</span>
+                        <img src="https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?w=300&h=280&fit=crop" alt="Люстра">
+                    </div>
+                    <div class="product-info">
+                        <h3>Люстра "Роскошь"</h3>
+                        <div><span class="star">★★★★★</span></div>
+                        <div><span class="current-price">29 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge" style="background: linear-gradient(135deg, #D4E157, #7FBF40);">Хит</span>
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=300&h=280&fit=crop" alt="Ковёр">
+                    </div>
+                    <div class="product-info">
+                        <h3>Ковёр "Персия"</h3>
+                        <div><span class="star">★★★★★</span></div>
+                        <div><span class="current-price">24 990 ₽</span><span class="old-price">32 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge" style="background: linear-gradient(135deg, #D4E157, #7FBF40);">Хит</span>
+                        <img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=300&h=280&fit=crop" alt="Подушки">
+                    </div>
+                    <div class="product-info">
+                        <h3>Подушки "Уют"</h3>
+                        <div><span class="star">★★★★★</span></div>
+                        <div><span class="current-price">3 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge" style="background: linear-gradient(135deg, #D4E157, #7FBF40);">Хит</span>
+                        <img src="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=300&h=280&fit=crop" alt="Табурет">
+                    </div>
+                    <div class="product-info">
+                        <h3>Табурет "Классика"</h3>
+                        <div><span class="star">★★★★☆</span></div>
+                        <div><span class="current-price">6 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge" style="background: linear-gradient(135deg, #D4E157, #7FBF40);">Хит</span>
+                        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=300&h=280&fit=crop" alt="Бра">
+                    </div>
+                    <div class="product-info">
+                        <h3>Бра "Свет"</h3>
+                        <div><span class="star">★★★★★</span></div>
+                        <div><span class="current-price">7 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge" style="background: linear-gradient(135deg, #D4E157, #7FBF40);">Хит</span>
+                        <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=300&h=280&fit=crop" alt="Торшер">
+                    </div>
+                    <div class="product-info">
+                        <h3>Торшер "Арт"</h3>
+                        <div><span class="star">★★★★☆</span></div>
+                        <div><span class="current-price">16 990 ₽</span></div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge" style="background: linear-gradient(135deg, #D4E157, #7FBF40);">Хит</span>
+                        <img src="https://images.unsplash.com/photo-1631679706772-9b844af2a11b?w=300&h=280&fit=crop" alt="Плед">
+                    </div>
+                    <div class="product-info">
+                        <h3>Плед "Тепло"</h3>
+                        <div><span class="star">★★★★★</span></div>
+                        <div><span class="current-price">5 990 ₽</span><span class="old-price">7 990 ₽</span></div>
                         <button class="add-to-cart">В корзину</button>
                     </div>
                 </div>
@@ -753,18 +925,50 @@
     </div>
 
     <script>
-        // Intro Screen - ИСПРАВЛЕНО
+        // Intro Screen - ПЛАВНЫЙ ПЕРЕХОД БЕЗ ВРАЩЕНИЯ
         const introScreen = document.getElementById('introScreen');
         const introContent = document.getElementById('introContent');
 
-        // Обработчик клика работает!
         introContent.addEventListener('click', function(e) {
             e.stopPropagation();
-            introContent.classList.add('zoom-out');
+            introContent.classList.add('fade-out');
             setTimeout(() => {
                 introScreen.classList.add('hide');
             }, 1500);
         });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        let currentTheme = 'light';
+
+        themeToggle.addEventListener('click', function() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            if (currentTheme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Светлая';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Тёмная';
+            }
+            
+            // Save preference
+            localStorage.setItem('theme', currentTheme);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            currentTheme = savedTheme;
+            document.body.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Светлая';
+            }
+        }
 
         // Cursor
         const cursor = document.getElementById('cursor');
